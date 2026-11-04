@@ -270,7 +270,7 @@ nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px s
 .tt-slot blockquote{margin:0;width:100%}
 /* Shown only if TikTok's script fails or is blocked, so the section never
    renders as a broken box the way the old embed did. */
-.tt-fallback{display:none;text-align:center;font-size:.9rem;color:color-mix(in srgb,var(--paper) 65%,var(--ink))}
+.tt-fallback{display:none;text-align:center;font-size:.9rem;line-height:1.9;color:color-mix(in srgb,var(--paper) 65%,var(--ink))}
 .tt.failed .tt-fallback{display:block}
 .tt.failed .tt-slot blockquote{display:none}
 .tt-fallback a{color:var(--apricot);font-weight:600;border-bottom:1px solid currentColor}
@@ -769,7 +769,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
             data-unique-id="centennialworld" data-embed-type="creator">
             <section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@centennialworld?refer=creator_embed">@centennialworld</a></section>
           </blockquote>
-          <p class="tt-fallback">The network account —<br><a href="https://www.tiktok.com/@centennialworld" target="_blank" rel="noopener">open on TikTok</a></p>
+          <p class="tt-fallback">The network account<br>5 million monthly views<br><a href="https://www.tiktok.com/@centennialworld" target="_blank" rel="noopener">Open on TikTok</a></p>
         </div>
       </div>
       <div class="tt rv" style="--i:1">
@@ -779,7 +779,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
             data-unique-id="miniscrollpodcast" data-embed-type="creator">
             <section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@miniscrollpodcast?refer=creator_embed">@miniscrollpodcast</a></section>
           </blockquote>
-          <p class="tt-fallback">The daily news account —<br><a href="https://tiktok.com/@miniscrollpodcast" target="_blank" rel="noopener">open on TikTok</a></p>
+          <p class="tt-fallback">The daily news account<br>10 million monthly views<br><a href="https://tiktok.com/@miniscrollpodcast" target="_blank" rel="noopener">Open on TikTok</a></p>
         </div>
       </div>
     </div>
@@ -1024,22 +1024,60 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
   }
 
   /* ---- tiktok embeds ----
-     The old site showed a raw error when this failed. Here the script is
-     loaded late, and if it hasn't rendered an iframe within 4s (blocked,
-     offline, wrong handle) each card quietly swaps to a styled link. */
-  var ttCards = document.querySelectorAll(".tt");
+     TikTok rate-limits its own creator embeds and, when it does, writes
+     "overload-protect triggered" straight into the page. Two embeds loading
+     together trip it often. So: load the script only once the section is in
+     view, judge each card on whether a real iframe actually rendered (their
+     error leaves a stub with almost no height), retry once, and otherwise
+     swap to the styled link. The visitor never sees TikTok's error text. */
+  var ttCards = [].slice.call(document.querySelectorAll(".tt"));
   if (ttCards.length){
-    var s = document.createElement("script");
-    s.async = true; s.src = "https://www.tiktok.com/embed.js";
-    s.onerror = function(){
-      ttCards.forEach(function(c){ c.classList.add("failed"); });
-    };
-    document.body.appendChild(s);
-    setTimeout(function(){
-      ttCards.forEach(function(c){
-        if (!c.querySelector("iframe")) c.classList.add("failed");
-      });
-    }, 4000);
+    var ttTries = 0;
+
+    function ttRendered(card){
+      var f = card.querySelector("iframe");
+      if (f && f.clientHeight > 150) return true;
+      return false;
+    }
+    function ttBroke(card){
+      // their failure message is written as plain text into the card
+      return /overload|protect triggered/i.test(card.textContent || "");
+    }
+    function ttLoad(){
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.tiktok.com/embed.js?t=" + Date.now();
+      s.onerror = ttGiveUp;
+      document.body.appendChild(s);
+      setTimeout(ttCheck, 5000);
+    }
+    function ttCheck(){
+      var bad = ttCards.filter(function(c){ return !ttRendered(c) || ttBroke(c); });
+      if (!bad.length) return;
+      if (ttTries < 1){
+        ttTries++;
+        bad.forEach(function(c){
+          var b = c.querySelector("blockquote");
+          if (b){ b.innerHTML = b.innerHTML; }   // clear whatever they wrote in
+        });
+        setTimeout(ttLoad, 2500);
+        return;
+      }
+      bad.forEach(function(c){ c.classList.add("failed"); });
+    }
+    function ttGiveUp(){ ttCards.forEach(function(c){ c.classList.add("failed"); }); }
+
+    if ("IntersectionObserver" in window){
+      var ttObs = new IntersectionObserver(function(entries, obs){
+        if (entries.some(function(e){ return e.isIntersecting; })){
+          obs.disconnect();
+          ttLoad();
+        }
+      }, {rootMargin:"300px"});
+      ttObs.observe(ttCards[0]);
+    } else {
+      ttLoad();
+    }
   }
 
 
