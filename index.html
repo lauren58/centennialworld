@@ -275,6 +275,18 @@ nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px s
 .tt.failed .tt-slot blockquote{display:none}
 .tt-fallback a{color:var(--apricot);font-weight:600;border-bottom:1px solid currentColor}
 .tt-cap{margin-top:16px;font-size:.84rem;line-height:1.5;color:color-mix(in srgb,var(--paper) 68%,var(--ink))}
+.tt-play{width:100%;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  background:color-mix(in srgb,var(--paper) 6%,var(--ink));border:1px solid color-mix(in srgb,var(--paper) 20%,var(--ink));
+  color:var(--paper);font:inherit;cursor:pointer;padding:28px 20px;transition:background .3s,border-color .3s}
+.tt-play:hover{background:color-mix(in srgb,var(--paper) 11%,var(--ink));border-color:var(--apricot)}
+.tt-play:focus-visible{outline:2px solid var(--apricot);outline-offset:2px}
+.tt-play-ico{width:46px;height:46px;border-radius:50%;background:var(--apricot);position:relative;flex:none}
+.tt-play-ico::after{content:"";position:absolute;top:50%;left:54%;transform:translate(-50%,-50%);
+  border-left:15px solid var(--ink);border-top:9px solid transparent;border-bottom:9px solid transparent}
+.tt-play-txt{font-weight:700;font-size:.95rem}
+.tt-play-sub{font-size:.8rem;color:color-mix(in srgb,var(--paper) 62%,var(--ink))}
+.tt-slot .tt-link{display:inline-block;margin-top:14px;color:var(--apricot);font-weight:600;font-size:.9rem;
+  border-bottom:1px solid currentColor}
 .tt-cap em{font-style:italic}
 
 /* ---------- audience comment wall ---------- */
@@ -767,22 +779,22 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
       <div class="tt rv" style="--i:0">
         <div class="tt-head"><strong>@centennialworld</strong></div>
         <div class="tt-slot">
-          <blockquote class="tiktok-embed" style="max-width:605px;min-width:325px" cite="https://www.tiktok.com/@centennialworld/video/7457431134348004615"
-            data-video-id="7457431134348004615">
-            <section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@centennialworld?refer=embed">@centennialworld</a></section>
-          </blockquote>
-          <p class="tt-fallback">The network account<br>5M+ monthly views<br><a href="https://www.tiktok.com/@centennialworld/video/7457431134348004615" target="_blank" rel="noopener">Watch on TikTok</a></p>
+          <button class="tt-play" type="button" data-video-id="7457431134348004615" data-handle="centennialworld" data-url="https://www.tiktok.com/@centennialworld/video/7457431134348004615">
+            <span class="tt-play-ico" aria-hidden="true"></span>
+            <span class="tt-play-txt">Play this TikTok</span>
+            <span class="tt-play-sub">The network account &middot; 5M+ monthly views</span>
+          </button>
         </div>
         <p class="tt-cap">BRITA &mdash; <em>Gen Z employee vs. millennial boss</em>, the opening film of our year-long campaign.</p>
       </div>
       <div class="tt rv" style="--i:1">
         <div class="tt-head"><strong>@miniscrollpodcast</strong></div>
         <div class="tt-slot">
-          <blockquote class="tiktok-embed" style="max-width:605px;min-width:325px" cite="https://www.tiktok.com/@miniscrollpodcast/video/7663371081398619413"
-            data-video-id="7663371081398619413">
-            <section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@miniscrollpodcast?refer=embed">@miniscrollpodcast</a></section>
-          </blockquote>
-          <p class="tt-fallback">The daily news account<br>10M+ monthly views<br><a href="https://www.tiktok.com/@miniscrollpodcast/video/7663371081398619413" target="_blank" rel="noopener">Watch on TikTok</a></p>
+          <button class="tt-play" type="button" data-video-id="7663371081398619413" data-handle="miniscrollpodcast" data-url="https://www.tiktok.com/@miniscrollpodcast/video/7663371081398619413">
+            <span class="tt-play-ico" aria-hidden="true"></span>
+            <span class="tt-play-txt">Play this TikTok</span>
+            <span class="tt-play-sub">The daily news account &middot; 10M+ monthly views</span>
+          </button>
         </div>
         <p class="tt-cap">A sponsored segment for Colgate, running inside the daily news format.</p>
       </div>
@@ -1027,63 +1039,49 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
     applyFilter("all", false);
   }
 
-  /* ---- tiktok embeds ----
-     TikTok rate-limits its own creator embeds and, when it does, writes
-     "overload-protect triggered" straight into the page. Two embeds loading
-     together trip it often. So: load the script only once the section is in
-     view, judge each card on whether a real iframe actually rendered (their
-     error leaves a stub with almost no height), retry once, and otherwise
-     swap to the styled link. The visitor never sees TikTok's error text. */
-  var ttCards = [].slice.call(document.querySelectorAll(".tt"));
-  if (ttCards.length){
-    var ttTries = 0;
+  /* ---- tiktok ----
+     Nothing is requested from TikTok until a visitor asks for it. Their embed
+     script rate-limits hard and writes "overload-protect triggered" into the
+     page when it trips, which is what kept appearing here. Loading one video
+     on click, rather than two on every page view, stays well under that — and
+     if it still fails the card turns into a link instead of an error. */
+  var ttButtons = [].slice.call(document.querySelectorAll(".tt-play"));
+  var ttScript = null;
+  ttButtons.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var slot = btn.parentNode,
+          url  = btn.dataset.url,
+          vid  = btn.dataset.videoId,
+          han  = btn.dataset.handle;
 
-    function ttRendered(card){
-      var f = card.querySelector("iframe");
-      if (f && f.clientHeight > 150) return true;
-      return false;
-    }
-    function ttBroke(card){
-      // their failure message is written as plain text into the card
-      return /overload|protect triggered/i.test(card.textContent || "");
-    }
-    function ttLoad(){
-      var s = document.createElement("script");
-      s.async = true;
-      s.src = "https://www.tiktok.com/embed.js?t=" + Date.now();
-      s.onerror = ttGiveUp;
-      document.body.appendChild(s);
-      setTimeout(ttCheck, 5000);
-    }
-    function ttCheck(){
-      var bad = ttCards.filter(function(c){ return !ttRendered(c) || ttBroke(c); });
-      if (!bad.length) return;
-      if (ttTries < 1){
-        ttTries++;
-        bad.forEach(function(c){
-          var b = c.querySelector("blockquote");
-          if (b){ b.innerHTML = b.innerHTML; }   // clear whatever they wrote in
-        });
-        setTimeout(ttLoad, 2500);
-        return;
+      slot.innerHTML =
+        '<blockquote class="tiktok-embed" style="max-width:605px;min-width:325px" cite="' + url + '" data-video-id="' + vid + '">' +
+        '<section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@' + han + '?refer=embed">@' + han + '</a></section>' +
+        '</blockquote>';
+
+      function giveUp(){
+        if (slot.querySelector("iframe")) return;
+        slot.innerHTML = '<p class="tt-fallback" style="display:block">Best watched on TikTok.<br>' +
+          '<a class="tt-link" href="' + url + '" target="_blank" rel="noopener">Open this video on TikTok</a></p>';
       }
-      bad.forEach(function(c){ c.classList.add("failed"); });
-    }
-    function ttGiveUp(){ ttCards.forEach(function(c){ c.classList.add("failed"); }); }
 
-    if ("IntersectionObserver" in window){
-      var ttObs = new IntersectionObserver(function(entries, obs){
-        if (entries.some(function(e){ return e.isIntersecting; })){
-          obs.disconnect();
-          ttLoad();
+      if (ttScript){
+        if (window.tiktokEmbed && window.tiktokEmbed.lib && window.tiktokEmbed.lib.render){
+          try { window.tiktokEmbed.lib.render([slot.querySelector("blockquote")]); } catch(e){}
+        } else {
+          var again = document.createElement("script");
+          again.async = true; again.src = "https://www.tiktok.com/embed.js?t=" + Date.now();
+          document.body.appendChild(again);
         }
-      }, {rootMargin:"300px"});
-      ttObs.observe(ttCards[0]);
-    } else {
-      ttLoad();
-    }
-  }
-
+      } else {
+        ttScript = document.createElement("script");
+        ttScript.async = true; ttScript.src = "https://www.tiktok.com/embed.js";
+        ttScript.onerror = giveUp;
+        document.body.appendChild(ttScript);
+      }
+      setTimeout(giveUp, 7000);
+    });
+  });
 
   /* ---- package picker: multi-select, prefilled enquiry, no backend ---- */
   var packs=[].slice.call(document.querySelectorAll(".pack")),
