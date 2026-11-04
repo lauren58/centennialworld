@@ -430,7 +430,9 @@ a.show:hover .show-body h3::after{transform:translate(2px,-2px);opacity:1}
 
 
 #founder .lede,#founder .chips{max-width:68ch}
-.founder-photo{margin:clamp(40px,5vw,64px) 0 0}
+.founder-grid{display:grid;gap:clamp(30px,4vw,54px);align-items:start}
+@media(min-width:900px){.founder-grid{grid-template-columns:minmax(0,1fr) 340px}}
+.founder-photo{margin:0;max-width:380px}
 .founder-photo img{width:100%;height:auto;display:block}
 .founder-photo figcaption{font-size:.78rem;color:var(--ink-soft);margin-top:.7rem;font-weight:500}
 
@@ -946,7 +948,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
 </section>
 
 <section class="founder" id="founder">
-  <div class="wrap">
+  <div class="wrap founder-grid">
     <div>
       <p class="eyebrow rv">The founder</p>
       <h2 class="rv" style="--i:1">Lauren Meisner</h2>
@@ -959,16 +961,12 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
       </div>
       <p class="lede rv" style="--i:6;margin-top:1.2rem;font-size:.95rem">More about Lauren at <a href="https://laurenmeisner.com" target="_blank" rel="noopener" style="font-weight:600;border-bottom:1.5px solid var(--accent)">laurenmeisner.com</a>.</p>
     </div>
-    
-  </div>
-  <div class="wrap">
-    <figure class="founder-photo rv">
+
+    <figure class="founder-photo rv" style="--i:2">
       <img src="assets/talk-virality.webp"
-           srcset="assets/talk-virality-sm.webp 700w, assets/talk-virality.webp 1100w"
-           sizes="(min-width:900px) 1160px, calc(100vw - 32px)"
-           alt="Lauren Meisner presenting a talk titled The Virality Myth"
-           width="1100" height="619" loading="lazy">
-      <figcaption>Presenting <em>The Virality Myth</em>.</figcaption>
+           alt="Lauren Meisner delivering a keynote presentation, holding a microphone at a lectern"
+           width="380" height="509" loading="lazy">
+      <figcaption>Keynote presentation on reaching Gen&nbsp;Z for Australian media buying agencies.</figcaption>
     </figure>
   </div>
 </section>
