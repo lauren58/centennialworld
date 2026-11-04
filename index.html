@@ -274,6 +274,8 @@ nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px s
 .tt.failed .tt-fallback{display:block}
 .tt.failed .tt-slot blockquote{display:none}
 .tt-fallback a{color:var(--apricot);font-weight:600;border-bottom:1px solid currentColor}
+.tt-cap{margin-top:16px;font-size:.84rem;line-height:1.5;color:color-mix(in srgb,var(--paper) 68%,var(--ink))}
+.tt-cap em{font-style:italic}
 
 /* ---------- audience comment wall ---------- */
 /* One column, one width. Two columns left ragged gaps wherever the screenshots
@@ -538,7 +540,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
     <p class="eyebrow rv">Where to find us</p>
     <h2 class="rv" style="--i:1">We’re where they already are.</h2>
     <p class="lede rv" style="--i:2;margin-top:1.3rem">We publish across podcast, YouTube, TikTok and Substack. We don’t ask our audience to come to us — we publish where young people already are, in the formats they already use.</p>
-    <div class="find-grid"><div class="fc rv" style="--i:0"><span class="plat">Video podcasts</span><strong>Infinite Scroll, Mini Scroll &amp; Mini Tech Scroll</strong><span class="stat">400K monthly listens across RSS &amp; YouTube</span><a href="https://open.spotify.com/show/18cqrQI7gMiVfxIMRAeULF" target="_blank" rel="noopener">Listen on Spotify</a><a href="https://podcasts.apple.com/au/podcast/infinite-scroll/id1499785732" target="_blank" rel="noopener" style="margin-top:.5rem">Listen on Apple</a></div><div class="fc rv" style="--i:1"><span class="plat">YouTube</span><strong>Centennial World</strong><span class="stat">27.1% engagement rate</span><a href="https://www.youtube.com/@centennialworldpodcastnetwork" target="_blank" rel="noopener">Watch on YouTube</a></div><div class="fc rv" style="--i:2"><span class="plat">TikTok</span><strong>@centennialworld &amp; @miniscrollpodcast</strong><span class="stat">15 million monthly views</span><a href="https://www.tiktok.com/@centennialworld" target="_blank" rel="noopener">Follow @centennialworld</a><a href="https://tiktok.com/@miniscrollpodcast" target="_blank" rel="noopener" style="margin-top:.5rem">Follow @miniscrollpodcast</a></div><div class="fc rv" style="--i:3"><span class="plat">Substack</span><strong>Keep Scrolling For…</strong><span class="stat">54% open rate</span><a href="https://centennialworld.substack.com/" target="_blank" rel="noopener">Read on Substack</a></div></div>
+    <div class="find-grid"><div class="fc rv" style="--i:0"><span class="plat">Video podcasts</span><strong>Infinite Scroll, Mini Scroll &amp; Mini Tech Scroll</strong><span class="stat">400K+ monthly listens across RSS &amp; YouTube</span><a href="https://open.spotify.com/show/18cqrQI7gMiVfxIMRAeULF" target="_blank" rel="noopener">Listen on Spotify</a><a href="https://podcasts.apple.com/au/podcast/infinite-scroll/id1499785732" target="_blank" rel="noopener" style="margin-top:.5rem">Listen on Apple</a></div><div class="fc rv" style="--i:1"><span class="plat">YouTube</span><strong>Centennial World</strong><span class="stat">27.1% engagement rate</span><a href="https://www.youtube.com/@centennialworldpodcastnetwork" target="_blank" rel="noopener">Watch on YouTube</a></div><div class="fc rv" style="--i:2"><span class="plat">TikTok</span><strong>@centennialworld &amp; @miniscrollpodcast</strong><span class="stat">15M+ monthly views</span><a href="https://www.tiktok.com/@centennialworld" target="_blank" rel="noopener">Follow @centennialworld</a><a href="https://tiktok.com/@miniscrollpodcast" target="_blank" rel="noopener" style="margin-top:.5rem">Follow @miniscrollpodcast</a></div><div class="fc rv" style="--i:3"><span class="plat">Substack</span><strong>Keep Scrolling For…</strong><span class="stat">54% open rate</span><a href="https://centennialworld.substack.com/" target="_blank" rel="noopener">Read on Substack</a></div></div>
     <div class="cwall"><figure class="rv" style="--i:0"><img src="comment-escapism.webp?v=2" alt="Audience comment" srcset="comment-escapism-sm.webp?v=2 760w, comment-escapism.webp?v=2 1440w" sizes="(min-width:720px) 573px, calc(100vw - 32px)" width="1440" height="567" loading="lazy"></figure><figure class="rv" style="--i:1"><img src="comment-fomo.webp?v=2" alt="Audience comment" srcset="comment-fomo-sm.webp?v=2 760w, comment-fomo.webp?v=2 1440w" sizes="(min-width:720px) 573px, calc(100vw - 32px)" width="1440" height="567" loading="lazy"></figure></div>
     <p class="cwall-note rv">What people say about the shows</p>
   
@@ -721,7 +723,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
       </div>
       <div class="chips rv" style="--i:4">
         <span class="chip">Sydney</span><span class="chip">New York</span><span class="chip">London</span>
-        <span class="chip">15M monthly social views</span><span class="chip">400K monthly listens</span>
+        <span class="chip">15M+ monthly social views</span><span class="chip">400K+ monthly listens</span>
       </div>
     </div>
     <div>
@@ -765,22 +767,24 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
       <div class="tt rv" style="--i:0">
         <div class="tt-head"><strong>@centennialworld</strong></div>
         <div class="tt-slot">
-          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@centennialworld"
-            data-unique-id="centennialworld" data-embed-type="creator">
-            <section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@centennialworld?refer=creator_embed">@centennialworld</a></section>
+          <blockquote class="tiktok-embed" style="max-width:605px;min-width:325px" cite="https://www.tiktok.com/@centennialworld/video/7457431134348004615"
+            data-video-id="7457431134348004615">
+            <section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@centennialworld?refer=embed">@centennialworld</a></section>
           </blockquote>
-          <p class="tt-fallback">The network account<br>5 million monthly views<br><a href="https://www.tiktok.com/@centennialworld" target="_blank" rel="noopener">Open on TikTok</a></p>
+          <p class="tt-fallback">The network account<br>5M+ monthly views<br><a href="https://www.tiktok.com/@centennialworld/video/7457431134348004615" target="_blank" rel="noopener">Watch on TikTok</a></p>
         </div>
+        <p class="tt-cap">BRITA &mdash; <em>Gen Z employee vs. millennial boss</em>, the opening film of our year-long campaign.</p>
       </div>
       <div class="tt rv" style="--i:1">
         <div class="tt-head"><strong>@miniscrollpodcast</strong></div>
         <div class="tt-slot">
-          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@miniscrollpodcast"
-            data-unique-id="miniscrollpodcast" data-embed-type="creator">
-            <section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@miniscrollpodcast?refer=creator_embed">@miniscrollpodcast</a></section>
+          <blockquote class="tiktok-embed" style="max-width:605px;min-width:325px" cite="https://www.tiktok.com/@miniscrollpodcast/video/7663371081398619413"
+            data-video-id="7663371081398619413">
+            <section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@miniscrollpodcast?refer=embed">@miniscrollpodcast</a></section>
           </blockquote>
-          <p class="tt-fallback">The daily news account<br>10 million monthly views<br><a href="https://tiktok.com/@miniscrollpodcast" target="_blank" rel="noopener">Open on TikTok</a></p>
+          <p class="tt-fallback">The daily news account<br>10M+ monthly views<br><a href="https://www.tiktok.com/@miniscrollpodcast/video/7663371081398619413" target="_blank" rel="noopener">Watch on TikTok</a></p>
         </div>
+        <p class="tt-cap">A sponsored segment for Colgate, running inside the daily news format.</p>
       </div>
     </div>
   </div>
