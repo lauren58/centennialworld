@@ -1,0 +1,55 @@
+/* Shared styling for the standalone policy pages.
+   Tokens mirror index.html — change them there first, then here. */
+:root{
+  --paper:#FFF3F2;
+  --paper-2:#FFE6E2;
+  --ink:#231F20;
+  --ink-soft:#6E6264;
+  --accent:#FF7C6F;
+  --accent-ink:#BC4335;
+  --maxw:820px;
+  --display:"Anton",system-ui,sans-serif;
+  --body:"Archivo",system-ui,-apple-system,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+
+nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px solid var(--ink)}
+.nav-in{display:flex;align-items:center;gap:1rem;padding:15px clamp(16px,4vw,40px);
+  max-width:1240px;margin:0 auto}
+.logo{margin-right:auto;display:flex;align-items:center}
+.logo img{height:30px;width:auto;display:block}
+.back{font-size:.9rem;font-weight:600;text-decoration:none;border-bottom:1.5px solid var(--accent);
+  padding-bottom:2px;min-height:44px;display:inline-flex;align-items:center}
+.back:hover{border-bottom-color:var(--ink)}
+
+header.doc-head{padding:clamp(48px,7vw,86px) 0 clamp(20px,3vw,32px)}
+h1{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:-.01em;
+  line-height:.95;font-size:clamp(2.2rem,6vw,3.6rem)}
+.eyebrow{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.18em;
+  color:var(--ink-soft);margin-bottom:.7rem}
+
+main{padding-bottom:clamp(56px,8vw,96px)}
+main h2{font-family:var(--body);font-weight:700;font-size:1.25rem;letter-spacing:-.02em;
+  margin:2.4rem 0 .8rem;padding-top:1.6rem;
+  border-top:1px solid color-mix(in srgb,var(--ink) 16%,transparent)}
+main p{margin:0 0 1.1rem;color:color-mix(in srgb,var(--ink) 86%,var(--paper))}
+main ul{list-style:none;margin:0 0 1.3rem;padding:0}
+main li{position:relative;padding:.45rem 0 .45rem 20px;color:color-mix(in srgb,var(--ink) 86%,var(--paper))}
+main li::before{content:"";position:absolute;left:0;top:1.05em;width:7px;height:7px;background:var(--accent)}
+main a[href^="mailto:"]{font-weight:600;color:var(--accent-ink);text-decoration:none;
+  border-bottom:1.5px solid currentColor}
+
+footer{background:var(--ink);color:var(--paper);padding:38px 0;font-size:.85rem}
+.foot-in{max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,40px);
+  display:flex;justify-content:space-between;gap:1.4rem;flex-wrap:wrap;
+  color:color-mix(in srgb,var(--paper) 58%,var(--ink))}
+.foot-in a{text-decoration:none}
+.foot-in a:hover{color:#FFCD9C}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Centennial World — Gen Z Media Network</title>
 <meta name="description" content="Centennial World is an independent Gen Z media brand covering internet culture, the creator economy and technology news for young women. 20M+ reach a month, 88% female audience.">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -159,7 +161,7 @@ nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px s
 .dark .num{color:var(--apricot)}
 
 /* ---------- where to find us ---------- */
-.find{padding:clamp(60px,8vw,100px) 0}
+.find{padding:clamp(52px,6.5vw,80px) 0}
 .find-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:clamp(28px,4vw,44px)}
 .fc{border:1px solid color-mix(in srgb,var(--ink) 18%,transparent);padding:22px;display:flex;flex-direction:column;
   transition:transform .4s var(--ease),border-color .3s,background .3s}
@@ -171,7 +173,7 @@ nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px s
 .fc a:hover{border-bottom-color:var(--ink)}
 
 /* ---------- work / sticky stack ---------- */
-.work{padding:clamp(70px,9vw,120px) 0}
+.work{padding:clamp(56px,7vw,88px) 0}
 /* sector filter */
 .filters{display:flex;flex-wrap:wrap;gap:9px;margin-top:clamp(26px,3.4vw,40px)}
 .filters button{
@@ -223,15 +225,16 @@ nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px s
 .case-photo{margin-top:1.6rem;padding-top:1.4rem;border-top:1px solid color-mix(in srgb,var(--ink) 14%,transparent)}
 .case-photo figure{margin:0}
 /* this one is a phone screenshot — capping it at its native width keeps it sharp */
-.case-photo .native{max-width:560px}
 .photo-pair{display:grid;grid-template-columns:1fr;gap:16px}
 @media(min-width:780px){
   .photo-pair{grid-template-columns:1fr 1fr;align-items:start}
   /* a shared ratio so the two captions sit on the same line */
   .photo-pair img{aspect-ratio:4/3;object-fit:cover}
+  .photo-pair.tall img{aspect-ratio:9/10}
+  .photo-pair.wide img{aspect-ratio:16/9}
 }
 .case-photo img{width:100%;height:auto;display:block}
-.case-photo figcaption{font-size:.76rem;color:var(--ink-soft);margin-top:.7rem;font-weight:500}
+.case-photo figcaption,.pair-caption{font-size:.76rem;color:var(--ink-soft);margin-top:.7rem;font-weight:500}
 
 /* ---------- audience proof inside a case study ---------- */
 .case-proof{margin-top:1.6rem;padding-top:1.4rem;border-top:1px solid color-mix(in srgb,var(--ink) 14%,transparent)}
@@ -242,7 +245,7 @@ nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px s
 .case-proof img{width:100%;height:auto;display:block}
 
 /* ---------- audience + perf table ---------- */
-.aud{padding:clamp(70px,9vw,120px) 0}
+.aud{padding:clamp(56px,7vw,88px) 0}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,70px);align-items:start}
 @media(max-width:900px){.split{grid-template-columns:1fr}}
 .perf{margin-top:2rem;width:100%;border-collapse:collapse;font-size:.92rem}
@@ -291,8 +294,20 @@ nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px s
 .cpair figure:hover{transform:translateY(-4px);border-color:var(--ink)}
 .cpair img{width:100%;height:auto;display:block}
 
+/* linked show cards and episode thumbnails */
+a.show{text-decoration:none;color:inherit}
+a.show .show-body h3::after{content:"\2197";font-size:.7em;margin-left:.35em;opacity:.45;
+  display:inline-block;transition:transform .3s var(--ease),opacity .3s}
+a.show:hover .show-body h3::after{transform:translate(2px,-2px);opacity:1}
+.case-photo a{display:block;position:relative}
+.case-photo a::after{content:"\25B6";position:absolute;right:10px;bottom:10px;
+  width:34px;height:34px;display:grid;place-items:center;font-size:.8rem;
+  background:color-mix(in srgb,var(--ink) 80%,transparent);color:var(--paper);
+  opacity:0;transition:opacity .3s var(--ease)}
+.case-photo a:hover::after{opacity:1}
+
 /* ---------- shows ---------- */
-.shows{padding:clamp(70px,9vw,120px) 0}
+.shows{padding:clamp(56px,7vw,88px) 0}
 .show-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:18px;margin-top:clamp(30px,4vw,48px)}
 /* three up, so five shows read as 3 + 2 rather than leaving an orphan */
 @media(min-width:1000px){.show-grid{grid-template-columns:repeat(3,1fr)}}
@@ -317,7 +332,7 @@ nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px s
 @keyframes pulse{70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
 
 /* ---------- formats ladder ---------- */
-.fmt{padding:clamp(70px,9vw,120px) 0}
+.fmt{padding:clamp(56px,7vw,88px) 0}
 .ladder{margin-top:clamp(30px,4vw,48px);display:flex;flex-direction:column}
 .rung{display:grid;grid-template-columns:auto 1fr auto;gap:1.6rem;align-items:center;padding:24px 0;border-top:1px solid color-mix(in srgb,var(--ink) 16%,transparent);transition:padding-left .4s var(--ease)}
 .rung:last-child{border-bottom:1px solid color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -340,7 +355,9 @@ nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px s
 
 
 /* ---------- packages ---------- */
-.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:16px;margin-top:clamp(28px,4vw,44px)}
+.packs{display:grid;grid-template-columns:1fr;gap:16px;margin-top:clamp(28px,4vw,44px)}
+@media(min-width:620px){.packs{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.packs{grid-template-columns:repeat(3,1fr)}}
 .pack{border:1px solid color-mix(in srgb,var(--ink) 18%,transparent);padding:24px;display:flex;flex-direction:column;background:var(--paper);transition:transform .4s var(--ease),border-color .3s,background .3s}
 .pack:hover{transform:translateY(-5px);border-color:var(--ink)}
 .pack.flag{background:var(--paper-2);border-color:var(--ink)}
@@ -400,14 +417,14 @@ nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px s
 .frm-status.err{display:block;background:var(--paper-2);border-left:5px solid var(--accent)}
 
 /* ---------- quotes ---------- */
-.quotes{padding:clamp(70px,9vw,120px) 0}
+.quotes{padding:clamp(56px,7vw,88px) 0}
 .q-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:20px;margin-top:clamp(30px,4vw,48px)}
 .q{padding:30px;border-radius:0;background:color-mix(in srgb,var(--paper) 7%,var(--ink));border:1px solid color-mix(in srgb,var(--paper) 14%,var(--ink))}
 .q blockquote{font-family:var(--body);font-weight:600;font-size:1.2rem;line-height:1.35;letter-spacing:-.015em}
 .q cite{display:block;margin-top:1.1rem;font-style:normal;font-size:.82rem;color:color-mix(in srgb,var(--paper) 58%,var(--ink))}
 
 /* ---------- founder ---------- */
-.founder{padding:clamp(70px,9vw,120px) 0}
+.founder{padding:clamp(56px,7vw,88px) 0}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.6rem}
 .chip{font-size:.8rem;padding:7px 14px;border-radius:0;background:var(--paper-2);font-weight:500}
 
@@ -461,12 +478,11 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
   <div class="nav-in">
     <a href="index.html" class="logo" aria-label="Centennial World home"><img src="assets/logo-wordmark.webp" alt="Centennial World" width="240" height="42"></a>
     <div class="nav-links">
-      <a href="#find">Listen</a>
+      <a href="#find">About</a>
       <a href="#work">Work</a>
       <a href="#audience">Audience</a>
       <a href="#shows">Shows</a>
       <a href="#formats">Partner</a>
-      <a href="#founder">About</a>
     </div>
     <a href="#contact" class="btn">Enquire</a>
     <button class="navtoggle" id="navtoggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navmenu">
@@ -475,8 +491,8 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
     </button>
   </div>
   <div id="navmenu" hidden>
-    <a href="#find">Listen</a><a href="#work">Work</a><a href="#audience">Audience</a>
-    <a href="#shows">Shows</a><a href="#formats">Partner</a><a href="#founder">About</a>
+    <a href="#find">About</a><a href="#work">Work</a><a href="#audience">Audience</a>
+    <a href="#shows">Shows</a><a href="#formats">Partner</a>
   </div>
 </nav>
 
@@ -574,7 +590,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
         <div class="res"><div><span class="num">12.4M</span><span class="over">121% of guarantee</span><p>Impressions</p></div><div><span class="num">1.9M</span><span class="over">in six months</span><p>Listens</p></div><div><span class="num">310K</span><span class="over">103% of guarantee</span><p>Social views</p></div><div><span class="num">110%</span><span class="over">campaign-wide</span><p>Delivery</p></div></div>
               <div class="case-proof">
           <p>What our audience said</p>
-          <div class="shots"><figure><img src="assets/comment-sp-tempus.webp" alt="Audience comment about this campaign" loading="lazy"></figure></div>
+          <div class="shots two"><figure><img src="assets/comment-sp-tempus.webp" alt="Audience comment about this campaign" loading="lazy"></figure><figure><img src="assets/comment-sp-cora-growing.webp" alt="Audience comment about this campaign" loading="lazy"></figure></div>
         </div>
       </article>
 
@@ -602,7 +618,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
         <div class="res"><div><span class="num">7.2M</span><span class="over">169% of guarantee</span><p>Impressions</p></div><div><span class="num">358K</span><span class="over">179% of guarantee</span><p>Social views</p></div><div><span class="num">304K</span><span class="over">119% of guarantee</span><p>Podcast listens</p></div><div><span class="num">28.2K</span><span class="over">comments, likes, saves</span><p>Engagements</p></div></div>
               <div class="case-proof">
           <p>What our audience said</p>
-          <div class="shots"><figure><img src="assets/comment-sp-bumble.webp" alt="Audience comment about this campaign" loading="lazy"></figure></div>
+          <div class="shots two"><figure><img src="assets/comment-sp-bumble.webp" alt="Audience comment about this campaign" loading="lazy"></figure><figure><img src="assets/comment-sp-disclosed.webp" alt="Audience comment about this campaign" loading="lazy"></figure></div>
         </div>
       </article>
 
@@ -614,14 +630,19 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
         <p>After a year of partnership, BRITA and Centennial World co-created a video series around Gen&nbsp;Z mental health and the pressure to be permanently online called <em>Touch Grass</em>.</p>
         <p class="did">A branded series nested in the <em>Mini Scroll</em> hero feed for reach, the campaign included eight episodes filmed outdoors, short-form cut downs of each episode across TikTok, Reels and Shorts, full series branding and product placement throughout.</p>
         <div class="case-photo">
-          <figure>
-            <img src="assets/touch-grass-episode.webp"
+          <div class="photo-pair wide">
+            <figure><a href="https://youtu.be/sN4dv1DboqY" target="_blank" rel="noopener" aria-label="Watch this episode on YouTube"><img src="assets/touch-grass-episode.webp"
                  srcset="assets/touch-grass-episode-sm.webp 700w, assets/touch-grass-episode.webp 1100w"
-                 sizes="(min-width:900px) 1040px, calc(100vw - 32px)"
-                 alt="A Touch Grass episode filmed outdoors with creator Eugene Healey, a BRITA jug on the table"
-                 width="1100" height="619" loading="lazy">
-            <figcaption>Filmed outdoors with product placement in every episode.</figcaption>
-          </figure>
+                 sizes="(min-width:780px) 512px, calc(100vw - 32px)"
+                 alt="A Touch Grass episode filmed outdoors, a BRITA jug on the table"
+                 width="1100" height="619" loading="lazy"></a></figure>
+            <figure><a href="https://youtu.be/ogWd8zeCma4" target="_blank" rel="noopener" aria-label="Watch this episode on YouTube"><img src="assets/touch-grass-episode-2.webp"
+                 srcset="assets/touch-grass-episode-2-sm.webp 700w, assets/touch-grass-episode-2.webp 1100w"
+                 sizes="(min-width:780px) 512px, calc(100vw - 32px)"
+                 alt="A Touch Grass episode filmed outdoors by the water"
+                 width="1100" height="619" loading="lazy"></a></figure>
+          </div>
+          <p class="pair-caption">Filmed outdoors with product placement in every episode.</p>
         </div>
         <div class="res"><div><span class="num">55.1M</span><span class="over">137% of guarantee</span><p>Impressions</p></div><div><span class="num">821K</span><span class="over">103% of guarantee</span><p>Views &amp; listens</p></div><div><span class="num">35</span><span class="over">TikTok, Reels, Shorts</span><p>Short-form cuts</p></div><div><span class="num">8</span><span class="over">plus pre-roll</span><p>Episodes</p></div></div>
               <div class="case-proof">
@@ -640,7 +661,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
         <div class="res"><div><span class="num">7.1M</span><span class="over">134% of guarantee</span><p>Impressions</p></div><div><span class="num">2.8M</span><span class="over">from clips alone</span><p>Social views</p></div><div><span class="num">86.6K</span><span class="over">144% of guarantee</span><p>Listens</p></div><div><span class="num">190%</span><span class="over">campaign-wide</span><p>Delivery</p></div></div>
               <div class="case-proof">
           <p>What our audience said</p>
-          <div class="shots"><figure><img src="assets/comment-sp-jurlique-thanks.webp" alt="Audience comment about this campaign" loading="lazy"></figure></div>
+          <div class="shots two"><figure><img src="assets/comment-sp-jurlique-thanks.webp" alt="Audience comment about this campaign" loading="lazy"></figure><figure><img src="assets/comment-sp-jurlique-mist.webp" alt="Audience comment about this campaign" loading="lazy"></figure></div>
         </div>
       </article>
 
@@ -654,7 +675,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
         <div class="res"><div><span class="num">500K+</span><span class="over">106% of guarantee</span><p>Impressions</p></div><div><span class="num">150K</span><span class="over">RSS &amp; YouTube</span><p>Listens</p></div><div><span class="num">10K</span><span class="over">across campaign</span><p>Social views</p></div></div>
               <div class="case-proof">
           <p>What our audience said</p>
-          <div class="shots"><figure><img src="assets/comment-sp-qatar.webp" alt="Audience comment about this campaign" loading="lazy"></figure></div>
+          <div class="shots two"><figure><img src="assets/comment-sp-qatar.webp" alt="Audience comment about this campaign" loading="lazy"></figure><figure><img src="assets/comment-sp-integration.webp" alt="Audience comment about this campaign" loading="lazy"></figure></div>
         </div>
       </article>
 
@@ -666,19 +687,29 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
         <p>To amplify ING’s research into Gen&nbsp;Z finances, dating, and young people’s priorities for their next stage of life, we created a campaign that focused on real-world experience.</p>
         <p class="did">This integrated campaign included burned-in host-read ads across <em>Mini Scroll</em> with above-the-fold CTAs, plus creative TikTok content captured at ING’s Dating on a Dime event, where we interviewed real Gen&nbsp;Z daters on their experiences and priorities.</p>
         <div class="case-photo">
-          <figure class="native">
-            <img src="assets/ing-dating-on-a-dime.webp"
-                 srcset="assets/ing-dating-on-a-dime-sm.webp 640w, assets/ing-dating-on-a-dime.webp 690w"
-                 sizes="(min-width:900px) 560px, calc(100vw - 32px)"
-                 alt="Vox pop interview filmed at ING's Dating on a Dime event"
-                 width="690" height="688" loading="lazy">
-            <figcaption>Vox pops captured at ING’s Dating on a Dime event.</figcaption>
-          </figure>
+          <div class="photo-pair tall">
+            <figure>
+              <img src="assets/ing-dating-on-a-dime.webp"
+                   srcset="assets/ing-dating-on-a-dime-sm.webp 460w, assets/ing-dating-on-a-dime.webp 690w"
+                   sizes="(min-width:780px) 512px, calc(100vw - 32px)"
+                   alt="Vox pop interview filmed at ING's Dating on a Dime event"
+                   width="690" height="688" loading="lazy">
+              <figcaption>Vox pops captured at ING’s Dating on a Dime event.</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/ing-newsletter.webp"
+                   srcset="assets/ing-newsletter-sm.webp 520w, assets/ing-newsletter.webp 856w"
+                   sizes="(min-width:780px) 512px, calc(100vw - 32px)"
+                   alt="The ING-sponsored segment in the Centennial World newsletter"
+                   width="856" height="978" loading="lazy">
+              <figcaption>The sponsored segment in our Substack.</figcaption>
+            </figure>
+          </div>
         </div>
         <div class="res"><div><span class="num">17.8M</span><span class="over">155% of guarantee</span><p>Impressions</p></div><div><span class="num">105K</span><span class="over">175% of guarantee</span><p>Listens &amp; views</p></div></div>
               <div class="case-proof">
           <p>What our audience said</p>
-          <div class="shots"><figure><img src="assets/comment-sp-grateful.webp" alt="Audience comment about this campaign" loading="lazy"></figure></div>
+          <div class="shots two"><figure><img src="assets/comment-sp-grateful.webp" alt="Audience comment about this campaign" loading="lazy"></figure><figure><img src="assets/comment-sp-ing-growth.webp" alt="Audience comment about this campaign" loading="lazy"></figure></div>
         </div>
       </article>
 
@@ -692,7 +723,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
         <div class="res"><div><span class="num">7.6M</span><span class="over">143% of guarantee</span><p>Impressions</p></div><div><span class="num">231K</span><span class="over">107% of guarantee</span><p>Listens &amp; views</p></div></div>
               <div class="case-proof">
           <p>What our audience said</p>
-          <div class="shots two"><figure><img src="assets/comment-tt-luce.webp" alt="Audience comment about this campaign" loading="lazy"></figure><figure><img src="assets/comment-sp-integration.webp" alt="Audience comment about this campaign" loading="lazy"></figure></div>
+          <div class="shots two"><figure><img src="assets/comment-tt-luce.webp" alt="Audience comment about this campaign" loading="lazy"></figure><figure><img src="assets/comment-sp-colgate-viral.webp" alt="Audience comment about this campaign" loading="lazy"></figure></div>
         </div>
       </article>
 
@@ -704,14 +735,19 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
         <p>Plaion backed a five-episode video series on the history, wins and obstacles facing women and gender-diverse people in the video games industry.</p>
         <p class="did">A branded series nested in the <em>Mini Scroll</em> feed with full season branding, short-form cuts and Substack banners. This was our first branded mini series, and our podcast audience has grown over 4× since it ran.</p>
         <div class="case-photo">
-          <figure>
-            <img src="assets/ltgg-episode.webp"
+          <div class="photo-pair wide">
+            <figure><a href="https://youtu.be/KHTlhyjLexM" target="_blank" rel="noopener" aria-label="Watch this episode on YouTube"><img src="assets/ltgg-episode.webp"
                  srcset="assets/ltgg-episode-sm.webp 700w, assets/ltgg-episode.webp 1100w"
-                 sizes="(min-width:900px) 1040px, calc(100vw - 32px)"
-                 alt="A Let The Girls Game episode titled The Impact of Games For Girls, carrying Let's Sing 2024 branding"
-                 width="1100" height="619" loading="lazy">
-            <figcaption>Full season branding across every episode.</figcaption>
-          </figure>
+                 sizes="(min-width:780px) 512px, calc(100vw - 32px)"
+                 alt="A Let The Girls Game episode on the impact of games for girls, carrying Let's Sing 2024 branding"
+                 width="1100" height="619" loading="lazy"></a></figure>
+            <figure><a href="https://youtu.be/L-rf6t2UK8M" target="_blank" rel="noopener" aria-label="Watch this episode on YouTube"><img src="assets/ltgg-episode-2.webp"
+                 srcset="assets/ltgg-episode-2-sm.webp 700w, assets/ltgg-episode-2.webp 1100w"
+                 sizes="(min-width:780px) 512px, calc(100vw - 32px)"
+                 alt="A Let The Girls Game episode on the sexualisation of women in gaming, carrying Let's Sing 2024 branding"
+                 width="1100" height="619" loading="lazy"></a></figure>
+          </div>
+          <p class="pair-caption">Full season branding across every episode.</p>
         </div>
         <div class="res"><div><span class="num">5.5M+</span><span class="over">110% of guarantee</span><p>Total reach</p></div><div><span class="num">275K</span><span class="over">110% of guarantee</span><p>Social views</p></div><div><span class="num">11.6K</span><span class="over">177% of guarantee</span><p>Substack views</p></div></div>
               <div class="case-proof">
@@ -778,7 +814,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
 
     <div class="tt-grid">
       <div class="tt rv" style="--i:0">
-        <div class="tt-head"><strong>@centennialworld</strong><span>108K followers</span></div>
+        <div class="tt-head"><strong>@centennialworld</strong></div>
         <div class="tt-slot">
           <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@centennialworld"
             data-unique-id="centennialworld" data-embed-type="creator">
@@ -788,7 +824,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
         </div>
       </div>
       <div class="tt rv" style="--i:1">
-        <div class="tt-head"><strong>@miniscrollpodcast</strong><span>45K followers</span></div>
+        <div class="tt-head"><strong>@miniscrollpodcast</strong></div>
         <div class="tt-slot">
           <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@miniscrollpodcast"
             data-unique-id="miniscrollpodcast" data-embed-type="creator">
@@ -807,12 +843,12 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
     <h2 class="rv" style="--i:1">Our shows.</h2>
     <p class="lede rv" style="--i:2;margin-top:1.3rem">Centennial World produces a range of Gen&nbsp;Z video podcasts — shows we run, shows we launched, and shows we collaborate on with brands.</p>
     <div class="show-grid">
-      <div class="show rv" style="--i:0"><img class="show-art" src="assets/cover-infinite-scroll.webp" alt="Infinite Scroll cover art" loading="lazy"><div class="show-body"><p class="eyebrow live">Monthly deep dive</p><h3>Infinite Scroll</h3><p>Infinite Scroll is a monthly deep dive into internet culture, exploring themes surrounding viral stardom, the creator economy, and how social media is shaping Gen&nbsp;Z.</p></div></div>
-      <div class="show rv" style="--i:1"><img class="show-art" src="assets/cover-mini-scroll.webp" alt="Mini Scroll cover art" loading="lazy"><div class="show-body"><p class="eyebrow live">Mon, Tue, Thu · Hero feed</p><h3>Mini Scroll</h3><p>Mini Scroll is a short-form internet culture news podcast that runs 3x a week, giving listeners a mini run-down on the biggest stories on the internet from that day.</p></div></div>
-      <div class="show rv" style="--i:2"><img class="show-art" src="assets/cover-mini-tech-scroll.webp" alt="Mini Tech Scroll cover art" loading="lazy"><div class="show-body"><p class="eyebrow live">Wednesdays</p><h3>Mini Tech Scroll</h3><p>Mini Tech Scroll is a weekly technology and social media news podcast, released on Wednesdays. The episodes provide short-form updates on the latest tech-related news stories that impact Gen&nbsp;Z.</p></div></div>
+      <a class="show rv" href="https://youtu.be/fVL_LHFz_Is" target="_blank" rel="noopener" style="--i:0"><img class="show-art" src="assets/cover-infinite-scroll.webp" alt="Infinite Scroll cover art" loading="lazy"><div class="show-body"><p class="eyebrow live">Monthly deep dive</p><h3>Infinite Scroll</h3><p>Infinite Scroll is a monthly deep dive into internet culture, exploring themes surrounding viral stardom, the creator economy, and how social media is shaping Gen&nbsp;Z.</p></div></a>
+      <a class="show rv" href="https://open.spotify.com/show/18cqrQI7gMiVfxIMRAeULF" target="_blank" rel="noopener" style="--i:1"><img class="show-art" src="assets/cover-mini-scroll.webp" alt="Mini Scroll cover art" loading="lazy"><div class="show-body"><p class="eyebrow live">Mon, Tue, Thu · Hero feed</p><h3>Mini Scroll</h3><p>Mini Scroll is a short-form internet culture news podcast that runs 3x a week, giving listeners a mini run-down on the biggest stories on the internet from that day.</p></div></a>
+      <a class="show rv" href="https://open.spotify.com/episode/3bbLCBTSdArn6WhSjV0uvZ" target="_blank" rel="noopener" style="--i:2"><img class="show-art" src="assets/cover-mini-tech-scroll.webp" alt="Mini Tech Scroll cover art" loading="lazy"><div class="show-body"><p class="eyebrow live">Wednesdays</p><h3>Mini Tech Scroll</h3><p>Mini Tech Scroll is a weekly technology and social media news podcast, released on Wednesdays. The episodes provide short-form updates on the latest tech-related news stories that impact Gen&nbsp;Z.</p></div></a>
       <div class="show rv past" style="--i:3"><img class="show-art" src="assets/cover-high-steaks.webp" alt="High Steaks cover art" loading="lazy"><div class="show-body"><p class="eyebrow">Launched by us · now independent</p><h3>High Steaks</h3><p>High Steaks is a podcast exploring iconic celebrity beef. (Get it, High Steaks?) Hosted by Laura Masia, Digital Editor at TV WEEK, and Madi Bogisch, Senior Lifestyle Writer at WHO Magazine. After reaching over 2 million listens in 18 months on the network, the show is now independent.</p></div></div>
-      <div class="show rv past" style="--i:4"><img class="show-art" src="assets/cover-touch-grass.webp" alt="Touch Grass cover art" loading="lazy"><div class="show-body"><p class="eyebrow">Branded series · BRITA</p><h3>Touch Grass</h3><p>Touch Grass was a branded podcast series in partnership with BRITA interviewing creatives about how they protect their mental health while being chronically online for work.</p></div></div>
-      <div class="show rv past" style="--i:5"><img class="show-art" src="assets/cover-let-the-girls-game.webp" alt="Let The Girls Game cover art" loading="lazy"><div class="show-body"><p class="eyebrow">Branded series · Plaion</p><h3>Let The Girls Game</h3><p>Let The Girls Game was a branded podcast series in partnership with Plaion exploring the history, successes, and challenges of women and gender-diverse people in the gaming industry.</p></div></div>
+      <a class="show rv past" href="https://youtu.be/sN4dv1DboqY" target="_blank" rel="noopener" style="--i:4"><img class="show-art" src="assets/cover-touch-grass.webp" alt="Touch Grass cover art" loading="lazy"><div class="show-body"><p class="eyebrow">Branded series · BRITA</p><h3>Touch Grass</h3><p>Touch Grass was a branded podcast series in partnership with BRITA interviewing creatives about how they protect their mental health while being chronically online for work.</p></div></a>
+      <a class="show rv past" href="https://youtu.be/KHTlhyjLexM" target="_blank" rel="noopener" style="--i:5"><img class="show-art" src="assets/cover-let-the-girls-game.webp" alt="Let The Girls Game cover art" loading="lazy"><div class="show-body"><p class="eyebrow">Branded series · Plaion</p><h3>Let The Girls Game</h3><p>Let The Girls Game was a branded podcast series in partnership with Plaion exploring the history, successes, and challenges of women and gender-diverse people in the gaming industry.</p></div></a>
     </div>
   </div>
 </section>
@@ -831,36 +867,20 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
 
     <h3 class="rv" style="margin-top:clamp(40px,5vw,62px)">Ready-to-buy packages</h3>
     <div class="packs">
-      <div class="pack rv" data-pack="Podcast Ad Packages" data-amount="7000" data-id="podcast-ads" aria-selected="false" style="--i:0">
-        <span class="badge"></span>
-        <h3>Podcast Ad Packages</h3>
+      <div class="pack flag rv" data-pack="Test-and-Learn Podcast &amp; Social Package" data-amount="7000" data-id="podcast-ads" aria-selected="false" style="--i:0">
+        <span class="badge">Most popular</span>
+        <h3>Test-and-Learn Podcast &amp; Social Package</h3>
         <p class="price">From $7K AUD</p>
         <p class="min">Min. 200,000 listens · 250,000 social views · 3M impressions</p>
         <ul><li>10 episodes of our hero show, <em>Mini Scroll</em></li><li>Host-read and burned-in ads at the top of every episode</li><li>Product placement in every episode</li><li>Trackable link above the fold in every description</li><li>Sponsored stories clipped to the <em>Mini Scroll</em> TikTok account</li><li>Post-campaign report against guarantees</li></ul>
         <button type="button" class="pick">Add to enquiry</button>
       </div>
-      <div class="pack rv" data-pack="TikTok Branded Videos" data-amount="3000" data-id="tiktok" aria-selected="false" style="--i:1">
+      <div class="pack rv" data-pack="Co-Created Branded Podcast Episode & Social Package" data-amount="10000" data-id="episode" aria-selected="false" style="--i:2">
         <span class="badge"></span>
-        <h3>TikTok Branded Videos</h3>
-        <p class="price">From $3K AUD</p>
-        <p class="min">Min. 100,000 views · 500K impressions</p>
-        <ul><li>One branded creative video</li><li>Published on the Centennial World verified brand account</li><li>Broad usage rights</li><li>Post-campaign report against guarantees</li></ul>
-        <button type="button" class="pick">Add to enquiry</button>
-      </div>
-      <div class="pack flag rv" data-pack="Co-Created Branded Podcast Episode & Social Package" data-amount="10000" data-id="episode" aria-selected="false" style="--i:2">
-        <span class="badge">Most popular</span>
         <h3>Co-Created Branded Podcast Episode &amp; Social Package</h3>
         <p class="price">From $10K AUD</p>
         <p class="min">Min. 25,000 listens · 200,000 social views · 1.55M impressions</p>
         <ul><li>A single video episode for <em>Infinite Scroll</em>, co-created with your brand or client around key messages, research, or a specific campaign</li><li>Host-read and burned-in ads at the top of the episode, and branded touchpoints throughout</li><li>Option for a brand ambassador interview</li><li>Product placement throughout</li><li>Three short-form clips promoting the sponsored episode, published across Centennial World TikTok and Shorts</li><li>Broad usage rights</li><li>Post-campaign report against guarantees</li></ul>
-        <button type="button" class="pick">Add to enquiry</button>
-      </div>
-      <div class="pack rv" data-pack="Substack Features" data-amount="0" data-id="substack" aria-selected="false" style="--i:3">
-        <span class="badge">Free add-on</span>
-        <h3>Substack Features</h3>
-        <p class="price">Complimentary</p>
-        <p class="min">With any package deal · 2,500+ subscribers · 54% open rate</p>
-        <ul><li>Banner placement or a written inclusion in <em>Keep Scrolling For…</em></li><li>Included at no cost alongside any package deal</li></ul>
         <button type="button" class="pick">Add to enquiry</button>
       </div>
       <div class="pack rv" data-pack="Custom Branded Mini Series" data-amount="30000" data-id="series" aria-selected="false" style="--i:4">
@@ -871,23 +891,14 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
         <ul><li>A full series concepted and produced for your brand</li><li>Nested in an existing RSS feed and on the Centennial World YouTube channel, so it launches with an audience</li><li>Product placement across every episode</li><li>Short-form cuts across TikTok and Shorts</li><li>Full series branding, including cover art</li><li>Presentation of results at the end of the series</li></ul>
         <button type="button" class="pick">Add to enquiry</button>
       </div>
-      <div class="pack rv" data-pack="Founder-Led" data-amount="2000" data-id="founder" aria-selected="false" style="--i:5">
-        <span class="badge"></span>
-        <h3>Founder-Led</h3>
-        <p class="price">From $2K AUD</p>
-        <p class="min">Scoped per campaign</p>
-        <ul><li>Branded content on Lauren Meisner’s own TikTok and Instagram</li><li>Speaking, hosting and panel moderation</li><li>Founder storytelling woven through a wider campaign</li><li>Scoped per campaign</li><li>Post-campaign report against guarantees</li></ul>
-        <button type="button" class="pick">Add to enquiry</button>
-      </div>
     </div>
 
     <div class="build rv" style="--i:1">
       <h3>Build your enquiry</h3>
-      <p class="hint">Select any combination above. Substack features come free with any package deal.</p>
+      <p class="hint">Select any combination above. Substack placement is included free with every package.</p>
       <div class="summary">
         <dl>
           <dt>Selected</dt><dd id="sum-pack">Nothing selected yet</dd>
-          <dt>Indicative from</dt><dd id="sum-total">—</dd>
         </dl>
       </div>
 
@@ -946,6 +957,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
         <span class="chip">SXSW</span><span class="chip">Web Summit</span><span class="chip">Sunrise · Blackbird VC</span>
         <span class="chip">CapTech2026</span>
       </div>
+      <p class="lede rv" style="--i:6;margin-top:1.2rem;font-size:.95rem">More about Lauren at <a href="https://laurenmeisner.com" target="_blank" rel="noopener" style="font-weight:600;border-bottom:1.5px solid var(--accent)">laurenmeisner.com</a>.</p>
     </div>
     
   </div>
@@ -1089,26 +1101,20 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
   /* ---- package picker: multi-select, prefilled enquiry, no backend ---- */
   var packs=[].slice.call(document.querySelectorAll(".pack")),
       sumPack=document.getElementById("sum-pack"),
-      sumTotal=document.getElementById("sum-total"),
       mail=document.getElementById("enquire");
-  function money(n){ return "$" + n.toLocaleString("en-AU") + " AUD"; }
   function refresh(){
     var on = packs.filter(function(c){ return c.getAttribute("aria-selected")==="true"; }),
-        names = on.map(function(c){ return c.dataset.pack; }),
-        oneOff = on.reduce(function(t,c){ return t + Number(c.dataset.amount||0); }, 0);
+        names = on.map(function(c){ return c.dataset.pack; });
 
     sumPack.textContent = names.length ? names.join(", ") : "Nothing selected yet";
-    // Substack is free, so it adds nothing to the total
-    sumTotal.textContent = oneOff ? money(oneOff) : "\u2014";
 
     var picked = names.length ? names.join(", ") : "";
     var hidden = document.getElementById("field-interested");
-    if (hidden) hidden.value = picked + (oneOff ? "  (indicative from " + money(oneOff) + ")" : "");
+    if (hidden) hidden.value = picked;
 
     if (mail){
       var body="Hi Centennial World,\n\nWe'd like to talk about a campaign.\n\n"+
                "Interested in: "+(picked||"not sure yet")+"\n"+
-               (oneOff?"Indicative from: "+money(oneOff)+"\n":"")+
                "\nBrand:\nTiming:\nBudget range:\n\nThanks,\n";
       mail.href="mailto:hello@centennialworld.com?subject="+
         encodeURIComponent("Campaign enquiry"+(names.length?" \u2014 "+names.join(", "):""))+
@@ -1163,7 +1169,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
   }
 
   /* ---- highlight the section currently in view ---- */
-  var navTargets = ["find","work","audience","shows","formats","founder"];
+  var navTargets = ["find","work","audience","shows","formats"];
   var navAnchors = {};
   navTargets.forEach(function(id){
     navAnchors[id] = [].slice.call(document.querySelectorAll('a[href="#'+id+'"]'));
