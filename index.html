@@ -51,7 +51,8 @@ body{
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(16px,4vw,40px)}
-section{position:relative;scroll-margin-top:92px}  /* clears the sticky nav on anchor jumps */
+section{position:relative;scroll-margin-top:92px}
+[tabindex="-1"]:focus{outline:none}  /* clears the sticky nav on anchor jumps */
 a{color:inherit;text-decoration:none}
 
 /* Anton carries the big headlines and figures, matching the decks.
@@ -491,7 +492,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
 
 <nav>
   <div class="nav-in">
-    <a href="index.html" class="logo" aria-label="Centennial World home"><img src="logo-wordmark.webp?v=2" alt="Centennial World" width="480" height="84"></a>
+    <a href="/" class="logo" aria-label="Centennial World home"><img src="logo-wordmark.webp?v=2" alt="Centennial World" width="480" height="84"></a>
     <div class="nav-links">
       <a href="#find">About</a>
       <a href="#work">Work</a>
@@ -1038,6 +1039,38 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
     });
     applyFilter("all", false);
   }
+
+  /* ---- navigation without the address bar filling up with #anchors ----
+     The links still work exactly as before, and still work with JS off. All
+     this does is scroll to the section and then tidy "#work" back out of the
+     URL, so what people copy and share is the clean address. */
+  var ttReduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tidyUrl(){
+    try { history.replaceState(null, "", location.pathname + location.search); } catch(err){}
+  }
+  document.addEventListener("click", function(e){
+    var a = e.target && e.target.closest ? e.target.closest("a") : null;
+    if (!a) return;
+    var href = a.getAttribute("href");
+    if (!href) return;
+
+    if (href.charAt(0) === "#" && href.length > 1){
+      var t = document.getElementById(href.slice(1));
+      if (!t) return;
+      e.preventDefault();
+      t.scrollIntoView({behavior: ttReduce ? "auto" : "smooth", block: "start"});
+      t.setAttribute("tabindex", "-1");
+      t.focus({preventScroll:true});
+      tidyUrl();
+      return;
+    }
+    // clicking the logo while already on the home page: go up, don't reload
+    if (href === "/" && (location.pathname === "/" || location.pathname === "/index.html")){
+      e.preventDefault();
+      scrollTo({top:0, behavior: ttReduce ? "auto" : "smooth"});
+      tidyUrl();
+    }
+  });
 
   /* ---- package picker: multi-select, prefilled enquiry, no backend ---- */
   var packs=[].slice.call(document.querySelectorAll(".pack")),
