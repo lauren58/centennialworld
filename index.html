@@ -1121,6 +1121,131 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
   var frm=document.getElementById("enquiry-form"),
       frmStatus=document.getElementById("frm-status"),
       frmSend=document.getElementById("frm-send");
+
+  /* Someone coming back from the plain-POST fallback below. */
+  if (frmStatus && /[?&]sent=1/.test(location.search)){
+    frmStatus.className="frm-status ok";
+    frmStatus.textContent="Thanks \u2014 that\u2019s with us. We\u2019ll come back to you shortly.";
+    try { history.replaceState(null,"",location.pathname); } catch(err){}
+  }
+
+  if (frm && frmStatus){
+    /* Normal submit, no JavaScript in the way. FormSubmit takes the post,
+       emails it, and sends the visitor back here with ?sent=1. This is the
+       fallback whenever the background request fails for any reason —
+       a blocked request, an extension, CORS, anything. */
+    function sendTheLongWay(){
+      frm.setAttribute("action","https://formsubmit.co/lauren@centennialworld.com");
+      var next=document.createElement("input");
+      next.type="hidden"; next.name="_next";
+      next.value=location.origin + location.pathname + "?sent=1";
+      frm.appendChild(next);
+      frm.removeEventListener("submit", onSubmit);
+      HTMLFormElement.prototype.submit.call(frm);
+    }
+
+    function onSubmit(e){
+      e.preventDefault();
+      frmStatus.className="frm-status";
+      frmStatus.textContent="";
+      frmSend.disabled=true; frmSend.textContent="Sending\u2026";
+      fetch("https://formsubmit.co/ajax/lauren@centennialworld.com", {
+        method:"POST",
+        headers:{"Accept":"application/json"},
+        body:new FormData(frm)
+      }).then(function(r){
+        return r.json().catch(function(){ return {success:"true"}; });
+      }).then(function(j){
+        if (j && String(j.success)==="false") throw new Error(j.message||"rejected");
+        frmStatus.className="frm-status ok";
+        frmStatus.textContent="Thanks \u2014 that\u2019s with us. We\u2019ll come back to you shortly.";
+        frm.reset();
+        document.querySelectorAll('.pack[aria-selected="true"]').forEach(function(c){
+          c.setAttribute("aria-selected","false");
+          c.querySelector(".pick").textContent="Add to enquiry";
+        });
+        if (typeof refresh === "function") refresh();
+        frmSend.disabled=false; frmSend.textContent="Send enquiry";
+      }).catch(function(err){
+        // Don't show the visitor an error — just send it the reliable way.
+        if (window.console && console.warn) console.warn("enquiry fallback:", err && err.message);
+        frmStatus.className="frm-status";
+        frmStatus.textContent="Sending\u2026";
+        sendTheLongWay();
+      });
+    }
+    frm.addEventListener("submit", onSubmit);
+  }
+
+  /* ---- navigation without the address bar filling up with #anchors ----
+     The links still work exactly as before, and still work with JS off. All
+     this does is scroll to the section and then tidy "#work" back out of the
+     URL, so what people copy and share is the clean address. */
+  var ttReduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tidyUrl(){
+    try { history.replaceState(null, "", location.pathname + location.search); } catch(err){}
+  }
+  document.addEventListener("click", function(e){
+    var a = e.target && e.target.closest ? e.target.closest("a") : null;
+    if (!a) return;
+    var href = a.getAttribute("href");
+    if (!href) return;
+
+    if (href.charAt(0) === "#" && href.length > 1){
+      var t = document.getElementById(href.slice(1));
+      if (!t) return;
+      e.preventDefault();
+      t.scrollIntoView({behavior: ttReduce ? "auto" : "smooth", block: "start"});
+      t.setAttribute("tabindex", "-1");
+      t.focus({preventScroll:true});
+      tidyUrl();
+      return;
+    }
+    // clicking the logo while already on the home page: go up, don't reload
+    if (href === "/" && (location.pathname === "/" || location.pathname === "/index.html")){
+      e.preventDefault();
+      scrollTo({top:0, behavior: ttReduce ? "auto" : "smooth"});
+      tidyUrl();
+    }
+  });
+
+  /* ---- package picker: multi-select, prefilled enquiry, no backend ---- */
+  var packs=[].slice.call(document.querySelectorAll(".pack")),
+      sumPack=document.getElementById("sum-pack"),
+      mail=document.getElementById("enquire");
+  function refresh(){
+    var on = packs.filter(function(c){ return c.getAttribute("aria-selected")==="true"; }),
+        names = on.map(function(c){ return c.dataset.pack; });
+
+    sumPack.textContent = names.length ? names.join(", ") : "Nothing selected yet";
+
+    var picked = names.length ? names.join(", ") : "";
+    var hidden = document.getElementById("field-interested");
+    if (hidden) hidden.value = picked;
+
+    if (mail){
+      var body="Hi Centennial World,\n\nWe'd like to talk about a campaign.\n\n"+
+               "Interested in: "+(picked||"not sure yet")+"\n"+
+               "\nBrand:\nTiming:\nBudget range:\n\nThanks,\n";
+      mail.href="mailto:hello@centennialworld.com?subject="+
+        encodeURIComponent("Campaign enquiry"+(names.length?" \u2014 "+names.join(", "):""))+
+        "&body="+encodeURIComponent(body);
+    }
+  }
+  packs.forEach(function(c){
+    c.querySelector(".pick").addEventListener("click", function(){
+      var on = c.getAttribute("aria-selected")==="true";
+      c.setAttribute("aria-selected", on ? "false" : "true");
+      c.querySelector(".pick").textContent = on ? "Add to enquiry" : "Added \u2713";
+      refresh();
+    });
+  });
+  if (packs.length) refresh();
+
+  /* ---- enquiry form: posts to Netlify, stays on the page ---- */
+  var frm=document.getElementById("enquiry-form"),
+      frmStatus=document.getElementById("frm-status"),
+      frmSend=document.getElementById("frm-send");
   if (frm && frmStatus){
     frm.addEventListener("submit", function(e){
       e.preventDefault();
