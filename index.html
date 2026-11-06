@@ -880,15 +880,16 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
         </dl>
       </div>
 
-      <!-- FormSubmit: posts to the activated inbox. This is the same endpoint
-           and the same request shape as the working form on laurenmeisner.com. -->
+      <!-- Web3Forms. The access key is public by design — it only says which
+           inbox to deliver to, and cannot be used to read anything. -->
       <form class="frm" id="enquiry-form" name="enquiry" method="POST"
-            action="https://formsubmit.co/ajax/lauren@centennialworld.com">
-        <input type="hidden" name="_subject" value="New campaign enquiry — centennialworld.com">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
+            action="https://api.web3forms.com/submit">
+        <input type="hidden" name="access_key" value="75b54603-b317-4397-b3e8-624ea0ea1e53">
+        <input type="hidden" name="subject" value="New campaign enquiry — centennialworld.com">
+        <input type="hidden" name="from_name" value="Centennial World website">
+        <input type="hidden" name="redirect" value="https://centennialworld.com/?sent=1">
         <input type="hidden" name="interested" id="field-interested" value="">
-        <p class="hp"><label>Do not fill this in <input name="_honey" tabindex="-1" autocomplete="off"></label></p>
+        <p class="hp"><label>Do not fill this in <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off"></label></p>
 
         <div><label for="f-name">Your name <span class="req">*</span></label>
           <input id="f-name" name="name" type="text" required autocomplete="name"></div>
@@ -1130,16 +1131,11 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
   }
 
   if (frm && frmStatus){
-    /* Normal submit, no JavaScript in the way. FormSubmit takes the post,
-       emails it, and sends the visitor back here with ?sent=1. This is the
-       fallback whenever the background request fails for any reason —
-       a blocked request, an extension, CORS, anything. */
+    /* Normal submit, no JavaScript in the way. Web3Forms takes the post,
+       emails it, and sends the visitor back here with ?sent=1 (the redirect
+       field above). This is the fallback whenever the background request
+       fails for any reason — a blocked request, an extension, CORS. */
     function sendTheLongWay(){
-      frm.setAttribute("action","https://formsubmit.co/lauren@centennialworld.com");
-      var next=document.createElement("input");
-      next.type="hidden"; next.name="_next";
-      next.value=location.origin + location.pathname + "?sent=1";
-      frm.appendChild(next);
       frm.removeEventListener("submit", onSubmit);
       HTMLFormElement.prototype.submit.call(frm);
     }
@@ -1149,14 +1145,14 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
       frmStatus.className="frm-status";
       frmStatus.textContent="";
       frmSend.disabled=true; frmSend.textContent="Sending\u2026";
-      fetch("https://formsubmit.co/ajax/lauren@centennialworld.com", {
+      fetch("https://api.web3forms.com/submit", {
         method:"POST",
         headers:{"Accept":"application/json"},
         body:new FormData(frm)
       }).then(function(r){
         return r.json().catch(function(){ return {success:"true"}; });
       }).then(function(j){
-        if (j && String(j.success)==="false") throw new Error(j.message||"rejected");
+        if (j && j.success === false) throw new Error(j.message||"rejected");
         frmStatus.className="frm-status ok";
         frmStatus.textContent="Thanks \u2014 that\u2019s with us. We\u2019ll come back to you shortly.";
         frm.reset();
