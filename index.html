@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Centennial World — Gen Z Media Network</title>
-<meta name="description" content="Centennial World is an independent Gen Z media brand covering internet culture, the creator economy and technology news for young women. 20M+ reach a month, 88% female audience.">
+<meta name="description" content="Centennial World is an award-winning independent Gen Z media brand covering internet culture, the creator economy and technology news for young women. 20M+ reach a month, 88% female audience.">
 <link rel="icon" href="favicon.ico?v=2" sizes="16x16 32x32 48x48">
 <link rel="icon" href="icon-96.png?v=2" type="image/png" sizes="96x96">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
@@ -166,6 +166,20 @@ nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px s
    sticks after a tap, which left the logos frozen mid-scroll. */
 @media (hover:hover) and (pointer:fine){
   .wall:hover .wall-row{animation-play-state:paused}
+}
+.wall-award{position:relative;z-index:3;text-align:center;margin-top:clamp(30px,3.6vw,46px);
+  font-size:.82rem;letter-spacing:.04em;color:var(--ink-soft)}
+.wall-award strong{font-weight:700;color:var(--ink)}
+.award-tag{display:inline-block;margin-right:.7rem;padding-right:.7rem;font-size:.7rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.16em;color:var(--accent-ink);
+  border-right:1px solid color-mix(in srgb,var(--ink) 20%,transparent)}
+/* on a phone the one-line version wraps mid-title, so stack the label instead */
+@media(max-width:620px){
+  .award-tag{display:block;margin:0 0 .5rem;padding:0;border-right:0}
+  .award-org{display:block}
+  .award-dash{display:none}
+  .wall-award strong{display:block;margin-top:.15rem}
+  .wall-award{line-height:1.45}
 }
 
 
@@ -532,7 +546,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
       <span class="ln" style="--i:1"><i>come to understand</i></span>
       <span class="ln" style="--i:2"><i>the <em>internet</em>.</i></span>
     </h1>
-    <p class="lede rv" style="--i:4">Centennial World is an independent media brand that covers internet culture, the creator economy, and technology news for young women. We’re chronically online so our audience doesn’t have to be.</p>
+    <p class="lede rv" style="--i:4">Centennial World is an award-winning independent media brand that covers internet culture, the creator economy, and technology news for young women. We’re chronically online so our audience doesn’t have to be.</p>
     <div class="cta-row rv" style="--i:5">
       <a href="#work" class="btn">See the work</a>
       <a href="#formats" class="btn btn-ghost">Partner with us</a>
@@ -554,6 +568,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
   <p class="eyebrow">Brands we've built campaigns for</p>
   <div class="wall-row a"><img src="client-jose-cuervo.webp" alt="Jose Cuervo" width="300" height="92" decoding="async"><img src="client-qatar-airways.webp" alt="Qatar Airways" width="300" height="118" decoding="async"><img src="client-tempus-one.webp" alt="Tempus One" width="152" height="120" decoding="async"><img src="client-brita.webp" alt="BRITA" width="300" height="88" decoding="async"><img src="client-pandora.webp" alt="Pandora" width="300" height="82" decoding="async"><img src="client-the-ordinary.webp" alt="The Ordinary" width="290" height="120" decoding="async"><img src="client-bumble.webp" alt="Bumble" width="277" height="86" decoding="async"><img src="client-mailchimp.webp" alt="Intuit Mailchimp" width="300" height="94" decoding="async"><img src="client-jose-cuervo.webp" alt="Jose Cuervo" width="300" height="92" decoding="async"><img src="client-qatar-airways.webp" alt="Qatar Airways" width="300" height="118" decoding="async"><img src="client-tempus-one.webp" alt="Tempus One" width="152" height="120" decoding="async"><img src="client-brita.webp" alt="BRITA" width="300" height="88" decoding="async"><img src="client-pandora.webp" alt="Pandora" width="300" height="82" decoding="async"><img src="client-the-ordinary.webp" alt="The Ordinary" width="290" height="120" decoding="async"><img src="client-bumble.webp" alt="Bumble" width="277" height="86" decoding="async"><img src="client-mailchimp.webp" alt="Intuit Mailchimp" width="300" height="94" decoding="async"></div>
   <div class="wall-row b"><img src="client-afterpay.webp" alt="Afterpay" width="300" height="78" decoding="async"><img src="client-blackbird.webp" alt="Blackbird" width="300" height="66" decoding="async"><img src="client-samsung.webp" alt="Samsung" width="300" height="70" decoding="async"><img src="client-ing.webp" alt="ING" width="300" height="94" decoding="async"><img src="client-tinder.webp" alt="Tinder" width="300" height="91" decoding="async"><img src="client-plaion.webp" alt="Plaion" width="300" height="83" decoding="async"><img src="client-coach.webp" alt="Coach" width="284" height="120" decoding="async"><img src="client-colgate.webp" alt="Colgate" width="263" height="120" decoding="async"><img src="client-afterpay.webp" alt="Afterpay" width="300" height="78" decoding="async"><img src="client-blackbird.webp" alt="Blackbird" width="300" height="66" decoding="async"><img src="client-samsung.webp" alt="Samsung" width="300" height="70" decoding="async"><img src="client-ing.webp" alt="ING" width="300" height="94" decoding="async"><img src="client-tinder.webp" alt="Tinder" width="300" height="91" decoding="async"><img src="client-plaion.webp" alt="Plaion" width="300" height="83" decoding="async"><img src="client-coach.webp" alt="Coach" width="284" height="120" decoding="async"><img src="client-colgate.webp" alt="Colgate" width="263" height="120" decoding="async"></div>
+  <p class="wall-award"><span class="award-tag">Winner</span><span class="award-org">Mumbrella Publish Awards</span><span class="award-dash"> &mdash; </span><strong>Launch of the Year</strong></p>
 </section>
 
 <section class="find" id="find">
