@@ -1133,7 +1133,7 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
   });
   if (packs.length) refresh();
 
-  /* ---- enquiry form: posts to Netlify, stays on the page ---- */
+  /* ---- enquiry form: posts to Web3Forms, stays on the page ---- */
   var frm=document.getElementById("enquiry-form"),
       frmStatus=document.getElementById("frm-status"),
       frmSend=document.getElementById("frm-send");
@@ -1186,107 +1186,6 @@ footer{padding:40px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,va
       });
     }
     frm.addEventListener("submit", onSubmit);
-  }
-
-  /* ---- navigation without the address bar filling up with #anchors ----
-     The links still work exactly as before, and still work with JS off. All
-     this does is scroll to the section and then tidy "#work" back out of the
-     URL, so what people copy and share is the clean address. */
-  var ttReduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function tidyUrl(){
-    try { history.replaceState(null, "", location.pathname + location.search); } catch(err){}
-  }
-  document.addEventListener("click", function(e){
-    var a = e.target && e.target.closest ? e.target.closest("a") : null;
-    if (!a) return;
-    var href = a.getAttribute("href");
-    if (!href) return;
-
-    if (href.charAt(0) === "#" && href.length > 1){
-      var t = document.getElementById(href.slice(1));
-      if (!t) return;
-      e.preventDefault();
-      t.scrollIntoView({behavior: ttReduce ? "auto" : "smooth", block: "start"});
-      t.setAttribute("tabindex", "-1");
-      t.focus({preventScroll:true});
-      tidyUrl();
-      return;
-    }
-    // clicking the logo while already on the home page: go up, don't reload
-    if (href === "/" && (location.pathname === "/" || location.pathname === "/index.html")){
-      e.preventDefault();
-      scrollTo({top:0, behavior: ttReduce ? "auto" : "smooth"});
-      tidyUrl();
-    }
-  });
-
-  /* ---- package picker: multi-select, prefilled enquiry, no backend ---- */
-  var packs=[].slice.call(document.querySelectorAll(".pack")),
-      sumPack=document.getElementById("sum-pack"),
-      mail=document.getElementById("enquire");
-  function refresh(){
-    var on = packs.filter(function(c){ return c.getAttribute("aria-selected")==="true"; }),
-        names = on.map(function(c){ return c.dataset.pack; });
-
-    sumPack.textContent = names.length ? names.join(", ") : "Nothing selected yet";
-
-    var picked = names.length ? names.join(", ") : "";
-    var hidden = document.getElementById("field-interested");
-    if (hidden) hidden.value = picked;
-
-    if (mail){
-      var body="Hi Centennial World,\n\nWe'd like to talk about a campaign.\n\n"+
-               "Interested in: "+(picked||"not sure yet")+"\n"+
-               "\nBrand:\nTiming:\nBudget range:\n\nThanks,\n";
-      mail.href="mailto:hello@centennialworld.com?subject="+
-        encodeURIComponent("Campaign enquiry"+(names.length?" \u2014 "+names.join(", "):""))+
-        "&body="+encodeURIComponent(body);
-    }
-  }
-  packs.forEach(function(c){
-    c.querySelector(".pick").addEventListener("click", function(){
-      var on = c.getAttribute("aria-selected")==="true";
-      c.setAttribute("aria-selected", on ? "false" : "true");
-      c.querySelector(".pick").textContent = on ? "Add to enquiry" : "Added \u2713";
-      refresh();
-    });
-  });
-  if (packs.length) refresh();
-
-  /* ---- enquiry form: posts to Netlify, stays on the page ---- */
-  var frm=document.getElementById("enquiry-form"),
-      frmStatus=document.getElementById("frm-status"),
-      frmSend=document.getElementById("frm-send");
-  if (frm && frmStatus){
-    frm.addEventListener("submit", function(e){
-      e.preventDefault();
-      frmStatus.className="frm-status";
-      frmSend.disabled=true; frmSend.textContent="Sending\u2026";
-      fetch(frm.getAttribute("action")||"/", {
-        method:"POST",
-        headers:{"Accept":"application/json"},
-        body:new FormData(frm)
-      }).then(function(r){
-        if(!r.ok) throw new Error(r.status);
-        return r.json().catch(function(){ return {success:"true"}; });
-      }).then(function(j){
-        if(j && String(j.success)==="false") throw new Error(j.message||"rejected");
-        frmStatus.className="frm-status ok";
-        frmStatus.textContent="Thanks \u2014 that\u2019s with us. We\u2019ll come back to you shortly.";
-        frm.reset();
-        // the picker selections are cleared along with the form
-        document.querySelectorAll('.pack[aria-selected="true"]').forEach(function(c){
-          c.setAttribute("aria-selected","false");
-          c.querySelector(".pick").textContent="Add to enquiry";
-        });
-        if (typeof refresh === "function") refresh();
-      }).catch(function(){
-        frmStatus.className="frm-status err";
-        frmStatus.innerHTML='That didn\u2019t send. Please email <a href="mailto:hello@centennialworld.com">hello@centennialworld.com</a> instead.';
-      }).then(function(){
-        frmSend.disabled=false; frmSend.textContent="Send enquiry";
-      });
-    });
   }
 
   /* ---- highlight the section currently in view ---- */
